@@ -3,6 +3,10 @@ import { Fragment, useState } from 'react';
 import './Blog.css';
 
 const Blog = ({ blog, user, handleNewLike, handleRemove }) => {
+  if (!blog || !blog.user) {
+    return null;
+  }
+
   const [showDetails, setShowDetails] = useState(false);
 
   const newLike = () => {

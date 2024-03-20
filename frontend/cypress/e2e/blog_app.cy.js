@@ -117,7 +117,7 @@ describe('Blog app', function () {
         cy.contains(blogTitle).parent().contains('Remove').should('not.exist');
       });
 
-      it.only('Blogs ordered correctly by likes', function () {
+      it('Blogs ordered correctly by likes', function () {
         const firstBlog = 'first random';
         const secondBlog = 'second random';
         const thirdBlog = 'third random';

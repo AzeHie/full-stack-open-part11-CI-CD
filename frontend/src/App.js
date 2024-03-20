@@ -11,7 +11,7 @@ import './App.css';
 const App = () => {
   const blogFormRef = useRef();
   const [blogs, setBlogs] = useState([]);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [notificationMessage, setNotificationMessage] = useState();
