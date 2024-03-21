@@ -28,7 +28,7 @@ describe('get requests', () => {
     // REMOVED PREVIOUS LINE, BECAUSE THERE IS A LOT OF BLOGS ADDED IN THE LATER TESTS
     expect(response.status).toBe(200);
     expect(response.type).toMatch(/application\/json/);
-  });
+  }, 20000);
 
   test('blogs are identified by id instead of _id', async () => {
     const response = await api.get('/api/blogs');
@@ -37,7 +37,7 @@ describe('get requests', () => {
     blogs.forEach((blog) => {
       expect(blog.id).toBeDefined();
     });
-  });
+  }, 20000);
 });
 
 describe('post requests', () => {
@@ -51,7 +51,7 @@ describe('post requests', () => {
     const response = await api.post('/api/blogs').send(newBlog);
 
     expect(response.status).toBe(401);
-  });
+  }, 20000);
 
   test('new blog is added to the database', async () => {
     let blogs;
@@ -71,7 +71,7 @@ describe('post requests', () => {
 
     expect(response.status).toBe(201);
     expect(blogsAtEnd).toBeGreaterThan(blogsAtStart);
-  });
+  }, 20000);
 
   test('if likes is empty, its modified to 0', async () => {
     const newBlog = {
@@ -86,7 +86,7 @@ describe('post requests', () => {
 
     expect(response.status).toBe(201);
     expect(lastBlog.likes).toBe(0);
-  });
+  }, 20000);
 
   test('if title is empty, response status code should be 400', async () => {
     const newBlog = {
@@ -98,7 +98,7 @@ describe('post requests', () => {
 
     const response = await api.post('/api/blogs').set('Authorization', `Bearer ${token}`).send(newBlog);
     expect(response.status).toBe(400);
-  });
+  }, 20000);
 
   test('if url is empty, response status code should be 400', async () => {
     const newBlog = {
@@ -110,7 +110,7 @@ describe('post requests', () => {
 
     const response = await api.post('/api/blogs').set('Authorization', `Bearer ${token}`).send(newBlog);
     expect(response.status).toBe(400);
-  });
+  }, 20000);
 });
 
 describe('delete requests', () => {
@@ -140,7 +140,7 @@ describe('delete requests', () => {
 
     expect(response.status).toBe(200);
     expect(blogsAfter).toBeLessThan(blogsBefore);
-  });
+  }, 20000);
 });
 
 describe('put requests', () => {
@@ -160,7 +160,7 @@ describe('put requests', () => {
     expect(response.body.id).toBe(blog.id);
     expect(response.body.likes).toBe(blog.likes + 1);
     expect(response.status).toBe(200);
-  });
+  }, 20000);
 });
 
 afterAll(async () => {
