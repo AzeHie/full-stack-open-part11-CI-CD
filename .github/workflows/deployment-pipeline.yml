@@ -16,34 +16,35 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 16.19.0
-
-      - name: navigate to backend directory
-        run: cd backend
         
       - name: Install Backend Dependencies
+        working-directory: ./backend
         run: npm install
 
       - name: Check backend tests
+        working-directory: ./backend
         run: npm run test
 
-      - name: Navigate to Frontend Directory
-        run: cd ../frontend
-
       - name: Install Frontend Dependencies
+        working-directory: ./frontend
         run: npm install
 
       - name: Check style
+        working-directory: ./frontend
         run: npm run eslint
 
       - name: Check frontend tests
+        working-directory: ./frontend
         run: npm run test
 
       - name: Check build
+        working-directory: ./frontend
         run: npm run build
 
       - name: Check e2e tests
         uses: cypress-io/github-action@v5
         with:
+          working-directory: ./frontend
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:5000
