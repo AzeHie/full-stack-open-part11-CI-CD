@@ -1,0 +1,53 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  deployment:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16.19.0
+
+      - name: navigate to backend directory
+        run: cd backend
+        
+      - name: Install Backend Dependencies
+        run: npm install
+
+      - name: Check backend tests
+        run: npm run test
+
+      - name: Navigate to Frontend Directory
+        run: cd ../frontend
+
+      - name: Install Frontend Dependencies
+        run: npm install
+
+      - name: Check style
+        run: npm run eslint
+
+      - name: Check frontend tests
+        run: npm run test
+
+      - name: Check build
+        run: npm run build
+
+      - name: Check e2e tests
+        uses: cypress-io/github-action@v5
+        with:
+          command: npm run test:e2e
+          start: npm run start-prod
+          wait-on: http://localhost:5000
+       
+        
+        
+        
