@@ -19,7 +19,7 @@ beforeAll(async () => {
     .send({ username: username, password: password });
 
   token = userDetails.body.token;
-});
+}, 20000);
 
 describe('get requests', () => {
   test('blogs are returned as json', async () => {
