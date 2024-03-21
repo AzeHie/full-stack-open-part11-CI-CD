@@ -19,7 +19,7 @@ jobs:
         
       - name: Install Backend Dependencies
         working-directory: ./backend
-        run: npm install
+        run: npm ci
 
       - name: Check backend tests
         working-directory: ./backend
