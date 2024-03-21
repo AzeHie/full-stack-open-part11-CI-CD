@@ -11,6 +11,11 @@ on:
 jobs:
   deployment:
     runs-on: ubuntu-20.04
+    env:
+      BEAVER_SECRET: ${{ secrets.BEAVER_SECRET }}
+      PORT: ${{ secrets.PORT }}
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,6 +29,8 @@ jobs:
       - name: Check backend tests
         working-directory: ./backend
         run: npm run test
+        env:
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
 
       - name: Install Frontend Dependencies
         working-directory: ./frontend
