@@ -31,10 +31,11 @@ jobs:
         run: npm run test
         env:
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+          SECRET: ${{ secrets.BEAVER_SECRET }}
 
       - name: Install Frontend Dependencies
         working-directory: ./frontend
-        run: npm install
+        run: npm ci
 
       - name: Check style
         working-directory: ./frontend
@@ -53,7 +54,7 @@ jobs:
         with:
           working-directory: ./frontend
           command: npm run test:e2e
-          start: npm run start-prod
+          start: npm run start
           wait-on: http://localhost:5000
        
         
