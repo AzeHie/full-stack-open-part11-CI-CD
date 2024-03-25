@@ -5,7 +5,7 @@ Cypress.Commands.add('login', ({ username, password }) => {
     password,
   }).then(({ body }) => {
     localStorage.setItem('loggedUser', JSON.stringify(body));
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:5000');
   });
 });
 
@@ -26,5 +26,5 @@ Cypress.Commands.add('createBlog', ({ title, author, url }) => {
     },
   });
 
-  cy.visit('http://localhost:3000');
+  cy.visit('http://localhost:5000');
 });

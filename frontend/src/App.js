@@ -29,9 +29,11 @@ const App = () => {
   const fetchBlogs = async () => {
     const loadedBlogs = await blogService.getAll();
 
-    loadedBlogs.sort((a, b) => b.likes - a.likes);
+    if (loadedBlogs) {
+      loadedBlogs.sort((a, b) => b.likes - a.likes);
 
-    setBlogs(loadedBlogs);
+      setBlogs(loadedBlogs);
+    }
   };
 
   useEffect(() => {
@@ -153,7 +155,9 @@ const App = () => {
               onChange={({ target }) => setPassword(target.value)}
             />
           </div>
-          <button type='submit' id="login-button">Login</button>
+          <button type='submit' id='login-button'>
+            Login
+          </button>
         </form>
       </div>
     );
