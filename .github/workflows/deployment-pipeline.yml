@@ -12,7 +12,7 @@ jobs:
   deployment:
     runs-on: ubuntu-20.04
     env:
-      BEAVER_SECRET: ${{ secrets.BEAVER_SECRET }}
+      SECRET: ${{ secrets.SECRET }}
       PORT: ${{ secrets.PORT }}
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
       TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
@@ -31,7 +31,7 @@ jobs:
         run: npm run test
         env:
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-          SECRET: ${{ secrets.BEAVER_SECRET }}
+          SECRET: ${{ secrets.SECRET }}
 
       - name: Install Frontend Dependencies
         working-directory: ./frontend
@@ -59,7 +59,7 @@ jobs:
         uses: cypress-io/github-action@v5
         env:
             MONGODB_URI: ${{ secrets.MONGODB_URI }}
-            SECRET: ${{ secrets.BEAVER_SECRET }}
+            SECRET: ${{ secrets.SECRET }}
         with:
           working-directory: ./frontend
           command: npm run test:e2e
