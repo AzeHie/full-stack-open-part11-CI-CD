@@ -53,7 +53,7 @@ jobs:
         working-directory: ./backend
         run: |
           npm run start &
-          sleep: 15
+          sleep 15
 
       - name: Check e2e tests
         uses: cypress-io/github-action@v5
