@@ -49,13 +49,20 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
+      - name: Start Backend Server
+        working-directory: ./backend
+        run: npm run start &
+
       - name: Check e2e tests
         uses: cypress-io/github-action@v5
+        env:
+            MONGODB_URI: ${{ secrets.MONGODB_URI }}
         with:
           working-directory: ./frontend
           command: npm run test:e2e
           start: npm run start:prod
           wait-on: http://localhost:5000
+          
        
         
         
