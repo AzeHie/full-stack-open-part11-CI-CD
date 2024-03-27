@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  deployment:
+  deployment_pipeline:
     runs-on: ubuntu-20.04
     env:
       SECRET: ${{ secrets.SECRET }}
@@ -65,6 +65,23 @@ jobs:
           command: npm run test:e2e
           start: npm run start:prod
           wait-on: http://localhost:5000
+
+          
+  tag_release:
+    needs: [deployment_pipeline]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check commit message for #skip
+        id: check_commit_message
+        run: echo "skip=$(if grep -q '#skip' "$GITHUB_EVENT_PATH"; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_OUTPUT 
+        shell: bash
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' && steps.check_commit_message.outputs.skip != 'true' }}
+        uses: anothrNick/github-tag-action@1.64.0
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
           
        
         
