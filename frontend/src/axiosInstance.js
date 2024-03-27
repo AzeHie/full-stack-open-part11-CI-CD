@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:3003';
+/* eslint-disable no-undef */
+const baseURL = process.env.NODE_ENV === 'production' ? 'https://full-stack-open-part11-ci-cd.onrender.com/' : 'http://localhost:3003';
+/* eslint-disable no-undef */
 const axiosInstance = axios.create({
   baseURL,
 });
