@@ -80,7 +80,18 @@ jobs:
         if: ${{ github.event_name == 'push' && steps.check_commit_message.outputs.skip != 'true' && steps.check_commit_message_backend.outputs.skipbackend != 'true' }}
         run: |
           curl https://api.render.com/deploy/srv-${{ secrets.BACKEND_RENDER_ID }}?key=${{ secrets.BACKEND_RENDER_KEY }}
-          
+
+      - name: Check commit message for #skipfrontend
+        id: check_commit_message_frontend
+        run: echo "skip=$(if grep -q '#skipfrontend' "$GITHUB_EVENT_PATH"; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_OUTPUT 
+        shell: bash
+
+      - name: Trigger frontend deployment
+        if: ${{ github.event_name == 'push' && steps.check_commit_message.outputs.skip != 'true' && steps.check_commit_message_frontend.outputs.skipfrontend != 'true' }}
+        run: |
+          curl https://api.render.com/deploy/srv-${{ secrets.FRONTEND_RENDER_ID }}?key=${{ secrets.FRONTEND_RENDER_KEY }}
+
+        
   tag_release:
     needs: [deployment_pipeline]
     runs-on: ubuntu-20.04
