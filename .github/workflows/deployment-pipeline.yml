@@ -77,7 +77,7 @@ jobs:
         shell: bash
         
       - name: Trigger backend deployment
-        if: ${{ github.event_name == 'push' && steps.check_commit_message.outputs.skip != 'true' && steps.check_commit_message_backend.outputs.skipbackend != 'true }}
+        if: ${{ github.event_name == 'push' && steps.check_commit_message.outputs.skip != 'true' && steps.check_commit_message_backend.outputs.skipbackend != 'true' }}
         run: |
           curl https://api.render.com/deploy/srv-${{ secrets.BACKEND_RENDER_ID }}?key=${{ secrets.BACKEND_RENDER_KEY }}
           
